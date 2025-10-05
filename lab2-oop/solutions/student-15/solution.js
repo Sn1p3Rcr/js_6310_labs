@@ -7,8 +7,8 @@ class Vehicle {
     // make (марка), model (модель), year (год выпуска).
     static vehicleCount = 0;
 
-    constructor(make, model, year) {
-        // ..
+       constructor(make, model, year) {
+        // Проверка параметров
         if (!make || !model || year === undefined) {
             throw new Error('Обязательные параметры: make, model, year');
         }
@@ -18,13 +18,18 @@ class Vehicle {
         if (typeof year !== 'number' || year < 1885) {
             throw new Error('Год должен быть числом после 1884');
         }
+        const curYear = new Date().getFullYear();
+        if (year > curYear) {
+            throw new Error('Год выпуска не может быть больше текущего');
+        }
 
-        
+        // Все проверки пройдены — создаем объект
         this.make = make;
         this.model = model;
-        this.year = year;
+        this._year = year;
+
         Vehicle.vehicleCount++;
-    }
+        }   
 
     // Добавьте метод displayInfo(), который выводит в консоль информацию 
     // о транспортном средстве в формате: "Марка: [make], Модель: [model], Год: [year]".
@@ -71,18 +76,14 @@ class Vehicle {
 class Car extends Vehicle {
     // Создайте дочерний класс Car, который наследуется от Vehicle.
     // Добавьте новое свойство numDoors (количество дверей).
-    constructor(make, model, year, numDoors = 4) {
-        // ..
-        try {
-            super(make, model, year);
-            if (typeof numDoors !== 'number' || numDoors < 1 || numDoors > 7) {
-                Vehicle.vehicleCount--;
-                throw new Error('Количество дверей должно быть числом от 1 до 7');
-            }
-            this.numDoors = numDoors;
-        } catch (err) {
-            throw err;
+       constructor(make, model, year, numDoors = 4) {
+        // Проверка количества дверей до вызова super
+        if (typeof numDoors !== 'number' || numDoors < 1 || numDoors > 7) {
+            throw new Error('Количество дверей должно быть числом от 1 до 7');
         }
+
+        super(make, model, year); // Vehicle создается только если базовые параметры валидны
+        this.numDoors = numDoors;
     }
 
     // Переопределите метод displayInfo() так, чтобы он также выводил количество дверей. 
@@ -104,22 +105,38 @@ class Car extends Vehicle {
 class ElectricCar extends Car {
     // Создайте дочерний класс ElectricCar, который наследуется от Car.
     // Добавьте новое свойство batteryCapacity (емкость батареи в кВт·ч).
-    constructor(make, model, year, numDoors = 4, batteryCapacity) {
-        // ..
-        try {
-            super(make, model, year, numDoors);
-            if (batteryCapacity === undefined) {
-                Vehicle.vehicleCount--;
-                throw new Error('Для ElectricCar обязателен параметр batteryCapacity');
-            }
-            if (typeof batteryCapacity !== 'number' || batteryCapacity <= 0) {
-                Vehicle.vehicleCount--;
-                throw new Error('Емкость батареи должна быть положительным числом');
-            }
-            this.batteryCapacity = batteryCapacity;
-        } catch (err) {
-            throw err;
+      constructor(make, model, year, numDoors = 4, batteryCapacity) {
+        // Проверка количества дверей
+        if (typeof numDoors !== 'number' || numDoors < 1 || numDoors > 7) {
+            throw new Error('Количество дверей должно быть числом от 1 до 7');
         }
+
+        // Проверка базовых параметров Vehicle
+        if (!make || !model || year === undefined) {
+            throw new Error('Обязательные параметры: make, model, year');
+        }
+        if (typeof make !== 'string' || typeof model !== 'string') {
+            throw new Error('Make и model должны быть строками');
+        }
+        if (typeof year !== 'number' || year < 1885) {
+            throw new Error('Год должен быть числом после 1884');
+        }
+        const curYear = new Date().getFullYear();
+        if (year > curYear) {
+            throw new Error('Год выпуска не может быть больше текущего');
+        }
+
+        // Проверка батареи
+        if (batteryCapacity === undefined) {
+            throw new Error('Для ElectricCar обязателен параметр batteryCapacity');
+        }
+        if (typeof batteryCapacity !== 'number' || batteryCapacity <= 0) {
+            throw new Error('Емкость батареи должна быть положительным числом');
+        }
+
+        // Все проверки пройдены
+        super(make, model, year, numDoors);
+        this.batteryCapacity = batteryCapacity;
     }
 
     // Переопределите метод displayInfo() для вывода дополнительной информации о батарее.
@@ -409,6 +426,7 @@ function runTests() {
     console.log('Тест 7 пройден! ✅');
 
     console.log('Всего создано транспортных средств:', Vehicle.getTotalVehicles());
+    console.assert(Vehicle.vehicleCount === 8, "Тест vehicleCount провален.");
 
     console.log('Все тесты пройдены! ✅');
 }
