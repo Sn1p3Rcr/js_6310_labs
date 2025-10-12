@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "KAI Winter theme",
+  "version": "1.0",
+  "description": "Добавляет кнопку для переключения на зимний режим",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://kai.ru/*", "https://abiturientu.kai.ru/*"], 
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
