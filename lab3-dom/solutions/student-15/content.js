@@ -68,7 +68,12 @@ function winterThemeStyles() {
     // Добавление стиля на страницу
     document.head.appendChild(style);
 
-    //Примеры работы с querySelectorAll, parentElement, children
+    //Примеры работы с querySelector, querySelectorAll, parentElement, children
+    const firstNews = document.querySelector('.news_item');
+    if (firstNews) {
+        firstNews.style.borderBottom = '1px solid #0b4da0';
+    }
+
     const highlightedNews = document.querySelectorAll('.news_box .news_item.highlight');
     highlightedNews.forEach(item => {
         // Изменяем родительский элемент
