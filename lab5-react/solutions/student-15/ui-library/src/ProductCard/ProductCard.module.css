@@ -1,0 +1,110 @@
+.product-card {
+  display: flex;
+  flex-direction: column; /* по умолчанию вертикально */
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;  /* Обеспечиваем, чтобы контент не выходил за пределы */
+  background: #fff;
+  transition: transform 0.2s;
+  max-width: 100%;  /* Ограничиваем ширину карточки */
+}
+
+.product-card:hover {
+  transform: scale(1.02);
+}
+
+/* ---------- IMAGE WRAPPER 1:1 ---------- */
+.product-card__image-wrapper {
+  width: 100%;
+  height: 200px;  /* фиксированная высота */
+  overflow: hidden;  /* скрытие лишнего контента */
+}
+
+.product-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- CONTENT ---------- */
+.product-card__content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-card__title {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.product-card__description {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.product-card__button {
+  padding: 8px 12px;
+  background: #0088ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  width: fit-content;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.product-card__button:hover {
+  background: #006bd1;
+}
+
+/* ---------- LAYOUTS ---------- */
+.product-card--left {
+  display: flex;  /* Используем flexbox для распределения элементов */
+  flex-direction: row;  /* Изображение и контент размещаются рядом */
+}
+
+.product-card--left .product-card__image-wrapper {
+  width: 40%;  /* Фото слева */
+  height: 100%;  /* Изображение растягивается по высоте карточки */
+}
+
+.product-card--left .product-card__content {
+  width: 60%;  /* Контент справа */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.product-card--left .product-card__button {
+  margin-top: auto;  /* Кнопка будет прижата к низу */
+}
+
+.product-card--bottom {
+  display: flex;
+  flex-direction: column;  /* Элементы вертикально */
+  height: 100%;  /* Фиксируем высоту карточки */
+}
+
+.product-card--bottom .product-card__image-wrapper {
+  width: 100%;  /* Фото будет занимать всю ширину */
+  height: 200px;  /* Фиксированная высота изображения */
+}
+
+.product-card--bottom .product-card__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;  /* Контент прижимаем к низу */
+  padding: 10px;
+  flex-grow: 1;  /* Контент растягивается на доступное пространство */
+}
+
+.product-card--bottom .product-card__button {
+  margin-top: 10px;  /* Немного отступа от текста */
+}
